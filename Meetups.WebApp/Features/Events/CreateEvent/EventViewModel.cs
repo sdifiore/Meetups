@@ -20,11 +20,35 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
 
         public string? Location { get; set; } = string.Empty;
 
+        public string? MeetupLink { get; set; } = string.Empty;
+
         [Required]
         public string? Category { get; set; } = string.Empty;
 
+        [Range(1, int.MaxValue, ErrorMessage = "Capacity must be above 0.")]
         public int Capacity { get; set; }
 
         public int OrganizerId { get; set; }
+
+        public EventViewModel()
+        {
+            BeginDateTime = DateTime.Now;
+            EndDateTime = DateTime.Now;
+        }
+
+        public bool ValidateDates()
+        {
+            return BeginDateTime < EndDateTime;
+        }
+
+        public bool ValidateLocation()
+        {
+            return Category != MeetupCategoriesEnum.InPerson.ToString() || !string.IsNullOrWhiteSpace(Location);
+        }
+
+        public bool ValidateMeetupLink()
+        {
+            return Category != MeetupCategoriesEnum.Online.ToString() || !string.IsNullOrWhiteSpace(MeetupLink);
+        }
     }
 }
