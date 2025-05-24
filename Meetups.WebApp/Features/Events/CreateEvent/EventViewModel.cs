@@ -14,9 +14,13 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
         public string? Description { get; set; } = string.Empty;
 
         [Required]
-        public DateTime BeginDateTime { get; set; }
+        public DateOnly BeginDate { get; set; }
 
-        public DateTime EndDateTime { get; set; }
+        public TimeOnly BeginTime { get; set; }
+
+        public DateOnly EndDate { get; set; }
+
+        public TimeOnly EndTime { get; set; }
 
         public string? Location { get; set; } = string.Empty;
 
@@ -30,15 +34,18 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
 
         public int OrganizerId { get; set; }
 
-        public EventViewModel()
+        public void EvenntViewModel()
         {
-            BeginDateTime = DateTime.Now;
-            EndDateTime = DateTime.Now;
+            BeginDate = DateOnly.FromDateTime(DateTime.Now);
+            EndDate = DateOnly.FromDateTime(DateTime.Now);
+            BeginTime = TimeOnly.FromDateTime(DateTime.Now);
+            EndTime = TimeOnly.FromDateTime(DateTime.Now);
+            Category = MeetupCategoriesEnum.InPerson.ToString();
         }
 
-        public bool ValidateDates()
+        public bool ValidateDateRange()
         {
-            return BeginDateTime < EndDateTime;
+            return BeginDate <= EndDate && (BeginDate != EndDate || BeginTime < EndTime);
         }
 
         public bool ValidateLocation()
