@@ -43,19 +43,26 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
             Category = MeetupCategoriesEnum.InPerson.ToString();
         }
 
-        public bool ValidateDateRange()
+        public string? ValidateDates()
         {
-            return BeginDate <= EndDate && (BeginDate != EndDate || BeginTime < EndTime);
+            return BeginDate > EndDate
+                ? "Begin date should be earlier than End Date"
+                : BeginDate == EndDate && BeginTime > EndTime ? "Begin time should be earlier than End Date"
+                : string.Empty;
         }
 
-        public bool ValidateLocation()
+        public string? ValidateLocation()
         {
-            return Category != MeetupCategoriesEnum.InPerson.ToString() || !string.IsNullOrWhiteSpace(Location);
+            return Category == MeetupCategoriesEnum.InPerson.ToString() || !string.IsNullOrWhiteSpace(Location)
+                ? "Location is required for In-Person Meetup."
+                : string.Empty;
         }
 
-        public bool ValidateMeetupLink()
+        public string? ValidateMeetupLink()
         {
-            return Category != MeetupCategoriesEnum.Online.ToString() || !string.IsNullOrWhiteSpace(MeetupLink);
+            return Category == MeetupCategoriesEnum.Online.ToString() || !string.IsNullOrWhiteSpace(MeetupLink)
+                ? "Meetup link is required for Online Meetup."
+                : string.Empty;
         }
     }
 }
