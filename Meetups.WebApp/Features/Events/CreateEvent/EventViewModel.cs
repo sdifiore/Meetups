@@ -44,10 +44,17 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
 
         public string? ValidateDates()
         {
-            return BeginDate > EndDate
-                ? "Begin date should be earlier than End Date"
-                : BeginDate == EndDate && BeginTime > EndTime ? "Begin time should be earlier than End Date"
-                : string.Empty;
+            DateTime combinedBeginDateTime = new(BeginDate.Year, BeginDate.Month, BeginDate.Day, BeginTime.Hour, BeginTime.Minute, BeginTime.Second);
+            DateTime combinedEndDateTime = new DateTime(EndDate.Year, EndDate.Month, EndDate.Day, EndTime.Hour, EndTime.Minute, EndTime.Second);
+
+            if (combinedBeginDateTime < DateTime.Now)
+            {
+                return "Begin Date and Time should be in future.";
+            }
+
+            return combinedEndDateTime <= combinedBeginDateTime
+                ? "End Date and Time should be later than Begin Date and Time."
+                : EndDate < BeginDate ? "End Date cannot be earlier than Begin Date." : string.Empty;
         }
 
         public string? ValidateLocation()
