@@ -58,7 +58,7 @@
     <br />
     <button type="submit" class="btn btn-primary">Create Event</button>
     &nbsp;
-    <NavLink class="btn btn-secondary" href="/">Back</NavLink>
+    <NavLink class="btn btn-secondary" href="/">Cancel</NavLink>
 
 </EditForm>
 
@@ -66,26 +66,26 @@
 
     private EventViewModel _eventViewModel = new EventViewModel();
 
-    private string errorMessage = string.Empty;
+    private string? errorMessage = string.Empty;
 
     private void CreateEvent()
     {
-        errorMessage = _eventViewModel.ValidateDates()!;
+        errorMessage = _eventViewModel.ValidateDates();
         if (!string.IsNullOrWhiteSpace(errorMessage))
         {
             return;
         }
 
-        errorMessage = _eventViewModel.ValidateLocation()!;
+        errorMessage = _eventViewModel.ValidateLocation();
         if (!string.IsNullOrWhiteSpace(errorMessage))
         {
             return;
         }
 
-        errorMessage = _eventViewModel.ValidateMeetupLink()!;
+        errorMessage = _eventViewModel.ValidateMeetupLink();
         if (!string.IsNullOrWhiteSpace(errorMessage))
         {
-
+            return;
         }
 
         //Save the event

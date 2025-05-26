@@ -26,15 +26,14 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
 
         public string? MeetupLink { get; set; } = string.Empty;
 
-        [Required]
         public string? Category { get; set; } = string.Empty;
 
-        [Range(1, int.MaxValue, ErrorMessage = "Capacity must be above 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "Description cannot be longer than 500 characters.")]
         public int Capacity { get; set; }
 
         public int OrganizerId { get; set; }
 
-        public void EvenntViewModel()
+        public EventViewModel()
         {
             BeginDate = DateOnly.FromDateTime(DateTime.Now);
             EndDate = DateOnly.FromDateTime(DateTime.Now);
@@ -61,7 +60,7 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
         public string? ValidateMeetupLink()
         {
             return Category == MeetupCategoriesEnum.Online.ToString() || !string.IsNullOrWhiteSpace(MeetupLink)
-                ? "Meetup link is required for Online Meetup."
+                ? "Meetup Link is required for Online Meetup."
                 : string.Empty;
         }
     }
