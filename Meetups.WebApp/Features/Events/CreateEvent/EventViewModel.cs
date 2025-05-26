@@ -22,7 +22,7 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
 
         public TimeOnly EndTime { get; set; }
 
-        public string? Location { get; set; } = string.Empty;
+        //public string? Location { get; set; } = string.Empty;
 
         public string? MeetupLink { get; set; } = string.Empty;
 
@@ -47,22 +47,19 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
             DateTime combinedBeginDateTime = new(BeginDate.Year, BeginDate.Month, BeginDate.Day, BeginTime.Hour, BeginTime.Minute, BeginTime.Second);
             DateTime combinedEndDateTime = new DateTime(EndDate.Year, EndDate.Month, EndDate.Day, EndTime.Hour, EndTime.Minute, EndTime.Second);
 
-            if (combinedBeginDateTime < DateTime.Now)
-            {
-                return "Begin Date and Time should be in future.";
-            }
-
-            return combinedEndDateTime <= combinedBeginDateTime
+            return combinedBeginDateTime < DateTime.Now
+                ? "Begin Date and Time should be in future."
+                : combinedEndDateTime <= combinedBeginDateTime
                 ? "End Date and Time should be later than Begin Date and Time."
                 : EndDate < BeginDate ? "End Date cannot be earlier than Begin Date." : string.Empty;
         }
 
-        public string? ValidateLocation()
-        {
-            return Category == MeetupCategoriesEnum.InPerson.ToString() || !string.IsNullOrWhiteSpace(Location)
-                ? "Location is required for In-Person Meetup."
-                : string.Empty;
-        }
+        //public string? ValidateLocation()
+        //{
+        //    return Category == MeetupCategoriesEnum.InPerson.ToString() || !string.IsNullOrWhiteSpace(Location)
+        //        ? "Location is required for In-Person Meetup."
+        //        : string.Empty;
+        //}
 
         public string? ValidateMeetupLink()
         {

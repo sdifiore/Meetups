@@ -51,12 +51,12 @@
         <input type="time" class="form-control" @bind-value="_eventViewModel.EndTime" />
         <ValidationMessage For="@(() => _eventViewModel.EndTime)" />
     </div>
-
+@* 
     <div class="form-group">
         <label for="Location">Venue Address</label>
         <InputText id="Location" class="form-control" @bind-Value="_eventViewModel.Location" />
         <ValidationMessage For="@(() => _eventViewModel.Location)" />
-    </div>
+    </div> *@
 
     <br />
     <button type="submit" class="btn btn-primary">Create Event</button>
@@ -71,10 +71,15 @@
 
     private string? errorMessage = string.Empty;
 
-    private void CreateEvent()
+    private async Task CreateEvent()
     {
         errorMessage = CreateEventService.ValidateEvent(_eventViewModel);
+        if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            return; // If there is an error, do not proceed
+        }
 
         //Save the envent
+        await CreateEventService.CreateEventAsync(_eventViewModel);
     }
 }

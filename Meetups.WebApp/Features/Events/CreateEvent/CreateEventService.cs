@@ -25,7 +25,7 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
                 BeginTime = eventViewModel.BeginTime,
                 EndDate = eventViewModel.EndDate,
                 EndTime = eventViewModel.EndTime,
-                Location = eventViewModel.Location,
+                //Location = eventViewModel.Location,
                 MeetupLink = eventViewModel.MeetupLink,
                 Category = eventViewModel.Category,
                 Capacity = eventViewModel.Capacity,
@@ -49,11 +49,11 @@ namespace Meetups.WebApp.Features.Events.CreateEvent
                 return errorMessage;
             }
 
-            errorMessage = eventViewModel.ValidateLocation() ?? string.Empty;
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                return errorMessage;
-            }
+            //errorMessage = eventViewModel.ValidateLocation() ?? string.Empty;
+            //if (!string.IsNullOrWhiteSpace(errorMessage))
+            //{
+            //    return errorMessage;
+            //}
 
             errorMessage = eventViewModel.ValidateMeetupLink() ?? string.Empty;
             return !string.IsNullOrWhiteSpace(errorMessage) ? errorMessage : string.Empty;
